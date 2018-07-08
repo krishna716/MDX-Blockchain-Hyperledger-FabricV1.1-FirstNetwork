@@ -1,0 +1,65 @@
+Author : Soumyojit Mondal
+Created on: 08/05/2018
+Version: 1.0
+
+This is a Fabric v1.1.0 network setup with 4 organizations, each having 1 peer and all are part of same channel. 
+There are 4 CAs each associated with individual peer. Here I have used solo orderer for this 
+network setup. You can use this network setup as basic and modify the configuration files as per your business requirement.
+
+Prerequisite:
+
+-  Operating Systems: Ubuntu Linux 14.04 / 16.04 LTS (both 64-bit), or Mac OS 10.12
+-  Docker Engine: Version 17.03 or higher
+-  Docker-Compose: Version 1.8 or higher
+-  Node: 8.9 or higher (note version 9 is not supported)
+-  npm: v5.x
+-  git: 2.9.x or higher
+-  Python: 2.7.x
+
+Download and install prerequisites(Execute these commands in your home directory):
+
+curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
+
+chmod u+x prereqs-ubuntu.sh
+
+./prereqs-ubuntu.sh
+
+
+
+This project folder is referred as <network>.  
+All the commands must be executed from  <network> folder.  
+One time setup. The following commands 
+  chmod a+x *.sh 
+ . ./downloadbin.sh 
+
+ To generated the cryto config and other configurations run the following commands 
+ . ./generateartifacts.sh 
+
+To start the netowrk  
+
+  . setenv.sh 
+  docker-compose up -d 
+  docker ps
+To build and join channel. Make sure that network is running 
+
+   docker exec -it cli bash -e ./buildandjoinchannel.sh 
+
+Install and instantiate chain codes
+Create the chain code directiory.
+As of now I have created that folder in the project and placed one sample chaincode for your testing. So don't need to execute next 3 lines.
+1. cd <network> 
+2. sudo mkdir -p chaincode/github.com/trialCC 
+3. Copy the chain code files in the respectivive directories.
+
+To instantiate and install chaincode:
+  docker exec -it cli bash -e  ./trialCC_install.sh
+  
+To test chaincode:
+docker exec -it <peerId> bash
+peer chaincode query -C trialchannel -n trialCC -c '{"Args":["query","a"]}'
+  
+To update the chain code , first update the chain code source files in the above mentioned directory.
+Then run the following commands as appropriate
+
+  docker exec -it cli bash -e  ./trialCC_update.sh <version>
+  

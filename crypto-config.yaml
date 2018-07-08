@@ -1,0 +1,48 @@
+OrdererOrgs:
+- Domain: orderer.com
+  Name: BayerClinicalTest
+  Specs:
+  - SANS:
+    - localhost
+  - Hostname: orderer
+PeerOrgs:
+- CA:
+    Hostname: ca
+  Domain: org1.com
+  Name: org1
+  Template:
+    Count: 1
+    SANS:
+    - localhost
+  Users:
+    Count: 0
+- CA:
+    Hostname: ca
+  Domain: org2.com
+  Name: org2
+  Template:
+    Count: 1
+    SANS:
+    - localhost
+  Users:
+    Count: 0
+- CA:
+    Hostname: ca
+  Domain: org3.com
+  Name: org3
+  Template:
+    Count: 1
+    SANS:
+    - localhost
+  Users:
+    Count: 0
+- CA:
+    Hostname: ca
+  Domain: org4.com
+  Name: org4
+  Template:
+    Count: 1
+    SANS:
+    - localhost
+  Users:
+    Count: 0

@@ -1,0 +1,85 @@
+
+Profiles:
+
+    OrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+          BayerClinicalTestConsortium:
+             Organizations:
+                - *org1Org
+                - *org2Org
+                - *org3Org
+                - *org4Org
+                
+    
+    
+    trialChannel:
+        Consortium: BayerClinicalTestConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *org1Org
+                - *org2Org
+                - *org3Org
+                - *org4Org
+                
+     
+Organizations:
+    - &OrdererOrg
+        Name: BayerClinicalTestMSP
+        ID: BayerClinicalTestMSP
+        MSPDir: crypto-config/ordererOrganizations/orderer.com/msp
+    
+    - &org1Org
+        Name: org1MSP
+        ID: org1MSP
+        MSPDir: crypto-config/peerOrganizations/org1.com/msp
+        AnchorPeers:
+          - Host: peer0.org1.com
+            Port: 7051
+        
+    - &org2Org
+        Name: org2MSP
+        ID: org2MSP
+        MSPDir: crypto-config/peerOrganizations/org2.com/msp
+        AnchorPeers:
+          - Host: peer0.org2.com
+            Port: 7051
+        
+    - &org3Org
+        Name: org3MSP
+        ID: org3MSP
+        MSPDir: crypto-config/peerOrganizations/org3.com/msp
+        AnchorPeers:
+          - Host: peer0.org3.com
+            Port: 7051
+        
+    - &org4Org
+        Name: org4MSP
+        ID: org4MSP
+        MSPDir: crypto-config/peerOrganizations/org4.com/msp
+        AnchorPeers:
+          - Host: peer0.org4.com
+            Port: 7051
+        
+
+Orderer: &OrdererDefaults
+        OrdererType: solo
+        Addresses:
+          - orderer.orderer.com:7050
+        BatchTimeout: 2s
+        BatchSize:
+          MaxMessageCount: 10
+          AbsoluteMaxBytes: 98 MB
+          PreferredMaxBytes: 512 KB
+        Kafka:
+          Brokers:
+            - 127.0.0.1:9092
+        Organizations:
+
+    
+Application: &ApplicationDefaults
+    Organizations:
